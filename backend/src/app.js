@@ -13,7 +13,8 @@ const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
-
+const connectDB = require('./config/db');
+connectDB();
 const app = express();
 
 // Enable CORS

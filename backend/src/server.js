@@ -1,11 +1,10 @@
 const dotenv = require('dotenv');
-const connectDB = require('./config/db');
 
 // Load env vars
 dotenv.config();
 
 // Connect to database
-connectDB();
+
 
 // We required the app after loading env vars to make sure they are available in app setup
 const app = require('./app');
