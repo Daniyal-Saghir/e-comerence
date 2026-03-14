@@ -20,8 +20,8 @@
       "destination": "/backend/src/app.js"
     },
     {
-      "src": "^(.*)$",
-      "dest": "/backend/public/index.html"
+      "source": "^(.*)$",
+      "destination": "/backend/public/index.html"
     }
   ],
   "env": {
