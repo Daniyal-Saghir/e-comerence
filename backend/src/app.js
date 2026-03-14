@@ -52,19 +52,15 @@ app.use('/api/v1/users', userRoutes);
 app.use('/api/v1/products', productRoutes);
 app.use('/api/v1/orders', orderRoutes);
 
-// Catch-all route for frontend (SPA)
-const NODE_ENV = process.env.NODE_ENV || 'development';
-if (NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../public')));
 
-  app.use((req, res) => {
-    res.sendFile(path.resolve(__dirname, '../public/index.html'));
+
+  // 1️⃣ Serve static files (images, js, css)
+  app.use(express.static(path.join(__dirname, "../public")));
+
+  // 2️⃣ React SPA fallback
+  app.get("*", (req, res) => {
+    res.sendFile(path.resolve(__dirname, "../public/index.html"));
   });
-} else {
-  app.get('/', (req, res) => {
-    res.send('API is running....');
-  });
-}
 
 // Custom error handler (must be after routes)
 app.use(errorHandler);
