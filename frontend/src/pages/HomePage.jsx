@@ -104,7 +104,7 @@ const HomePage = () => {
                   initial={{ opacity: 0, y: 50 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.2, duration: 1, ease: [0.16, 1, 0.3, 1] }}
-                  className="text-7xl md:text-9xl font-black tracking-tighter text-foreground leading-[0.8] uppercase italic"
+                  className="text-5xl sm:text-7xl md:text-9xl font-black tracking-tighter text-foreground leading-[0.8] uppercase italic"
                 >
                   Future <br />
                   <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-foreground to-accent">Avenue.</span>
@@ -176,7 +176,7 @@ const HomePage = () => {
               <Sparkles className="h-4 w-4" />
               <span className="text-[9px] font-black uppercase tracking-[0.4em]">Elite Curation</span>
             </div>
-            <h2 className="text-5xl md:text-7xl font-black tracking-[calc(-0.05em)] uppercase italic leading-none text-foreground">Featured <br />Spotlight.</h2>
+            <h2 className="text-4xl md:text-7xl font-black tracking-[calc(-0.05em)] uppercase italic leading-[none] text-foreground">Featured <br />Spotlight.</h2>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-10 max-w-[1440px] mx-auto px-6 md:px-12 w-full">
@@ -187,7 +187,7 @@ const HomePage = () => {
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ delay: idx * 0.1 }}
                   viewport={{ once: true }}
-                  className="relative h-[650px] rounded-[3.5rem] overflow-hidden group shadow-2xl border border-border/50"
+                  className="relative h-[500px] md:h-[650px] rounded-[3.5rem] overflow-hidden group shadow-2xl border border-border/50"
                 >
                   <img src={p.image} className="absolute inset-0 w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110" alt={p.name} />
                   <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90" />
@@ -228,7 +228,7 @@ const HomePage = () => {
                   <Layers className="h-5 w-5" />
                   <span className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground">Network Architecture</span>
                 </div>
-                <h2 className="text-6xl md:text-8xl font-black tracking-tight italic uppercase text-foreground leading-none">Taxonomy.</h2>
+                <h2 className="text-4xl sm:text-6xl md:text-8xl font-black tracking-tight italic uppercase text-foreground leading-none">Taxonomy.</h2>
               </div>
               <MagneticButton strength={20}>
                 <Button onClick={() => navigate('/shop')} variant="outline" className="font-black text-[10px] uppercase tracking-widest border-border/50 glass-premium rounded-2xl h-16 px-10 group text-foreground">
@@ -243,7 +243,7 @@ const HomePage = () => {
                   <motion.div
                     whileHover={{ y: -10 }}
                     onClick={() => navigate(`/shop?category=${cat.id}`)}
-                    className="group relative h-[500px] rounded-[3rem] overflow-hidden cursor-pointer border border-border/50"
+                    className="group relative h-[400px] md:h-[500px] rounded-[3rem] overflow-hidden cursor-pointer border border-border/50"
                   >
                     <div className={cn("absolute inset-0 opacity-40 transition-opacity group-hover:opacity-60", cat.color)} />
                     <div className="absolute inset-0 bg-background/80 group-hover:bg-background/40 transition-all duration-700" />
@@ -284,12 +284,12 @@ const HomePage = () => {
                 <Box className="h-5 w-5" />
                 <span className="text-[10px] font-black uppercase tracking-[0.4em] ">{keyword ? 'Search results' : 'Active Inventory'}</span>
               </div>
-              <h2 className="text-5xl font-black tracking-tight italic uppercase text-foreground leading-none">
+              <h2 className="text-3xl sm:text-5xl font-black tracking-tight italic uppercase text-foreground leading-none">
                 {keyword ? `Feed: "${keyword}"` : 'The Collection.'}
               </h2>
             </div>
 
-            <div className="glass-premium p-1.5 rounded-2xl border border-border/50 flex gap-1">
+            <div className="glass-premium p-1 md:p-1.5 rounded-2xl border border-border/50 flex flex-wrap gap-1 justify-center md:justify-start">
               {['trending', 'exclusive', null].map((type) => (
                 <Button
                   key={type || 'all'}
@@ -297,7 +297,7 @@ const HomePage = () => {
                   size="sm"
                   onClick={() => navigate(type ? `/search/${type}` : '/')}
                   className={cn(
-                    "rounded-xl px-6 text-[10px] font-black uppercase tracking-widest transition-all",
+                    "rounded-xl px-4 md:px-6 h-10 md:h-9 text-[9px] md:text-[10px] font-black uppercase tracking-widest transition-all",
                     (type === keyword || (!type && !keyword)) ? "bg-primary shadow-lg text-primary-foreground" : "text-foreground/40 hover:text-foreground"
                   )}
                 >
@@ -353,7 +353,7 @@ const HomePage = () => {
                       <Globe className="h-5 w-5" />
                       <span className="text-[9px] font-black uppercase tracking-[0.5em] text-white/40">Global Logistics</span>
                     </div>
-                    <h2 className="text-5xl md:text-6xl font-black text-foreground tracking-tighter leading-none italic uppercase">The Official <br /> Distribution Hub.</h2>
+                    <h2 className="text-4xl md:text-6xl font-black text-foreground tracking-tighter leading-none italic uppercase">The Official <br /> Distribution Hub.</h2>
                     <p className="text-foreground/30 font-bold text-sm leading-relaxed max-w-sm uppercase tracking-widest">
                       We partner exclusively with elite manufacturers to ensure product integrity and innovative superiority.
                     </p>
@@ -395,7 +395,7 @@ const HomePage = () => {
                 </motion.div>
 
                 <div className="max-w-2xl space-y-6 relative z-10">
-                  <h2 className="text-5xl md:text-7xl font-black tracking-tighter text-foreground italic uppercase leading-none">Stay Ahead.</h2>
+                  <h2 className="text-4xl md:text-7xl font-black tracking-tighter text-foreground italic uppercase leading-none">Stay Ahead.</h2>
                   <p className="text-foreground/30 font-bold text-sm uppercase tracking-[0.2em] max-w-md mx-auto">Join the world's most elite tech distribution list. Rare units, early drops, and secret directives.</p>
                 </div>
 

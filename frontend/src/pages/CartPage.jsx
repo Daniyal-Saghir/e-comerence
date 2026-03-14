@@ -28,15 +28,15 @@ const CartPage = () => {
   const totalItems = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
   return (
-    <div className="max-w-[1440px] mx-auto px-6 md:px-12 py-12 space-y-12 min-h-[80vh]">
+    <div className="max-w-[1440px] mx-auto px-4 md:px-12 py-12 space-y-12 min-h-[80vh]">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-2">
-            <h1 className="text-4xl font-black tracking-tight flex items-center gap-3">
-                <ShoppingBag className="h-10 w-10 text-primary" />
+            <h1 className="text-3xl md:text-4xl font-black tracking-tight flex items-center gap-3">
+                <ShoppingBag className="h-8 w-8 md:h-10 md:w-10 text-primary" />
                 Your Cart
             </h1>
-            <p className="text-muted-foreground font-medium">
-                {totalItems === 0 ? "Your bag is currently empty." : `You have ${totalItems} premium items in your selection.`}
+            <p className="text-xs md:text-sm text-muted-foreground font-medium">
+                {totalItems === 0 ? "Your bag is currently empty." : `You have ${totalItems} premium items.`}
             </p>
         </div>
         
@@ -124,24 +124,24 @@ const CartPage = () => {
                     </div>
 
                     {/* Quantity Controls */}
-                    <div className="flex items-center gap-6 shrink-0 w-full sm:w-auto justify-between sm:justify-end">
+                    <div className="flex items-center gap-4 shrink-0 w-full sm:w-auto justify-between sm:justify-end border-t sm:border-t-0 pt-4 sm:pt-0">
                         <div className="flex items-center bg-muted/50 rounded-xl p-1 border shadow-inner">
                           <Button
                             variant="ghost"
                             size="icon"
                             disabled={item.qty <= 1}
                             onClick={() => addToCartHandler(item, Math.max(1, item.qty - 1))}
-                            className={cn("h-8 w-8 rounded-lg", item.qty <= 1 && "opacity-20")}
+                            className={cn("h-7 w-7 rounded-lg", item.qty <= 1 && "opacity-20")}
                           >
                             <Minus className="w-3 h-3" />
                           </Button>
-                          <span className="w-10 text-center text-sm font-black tabular-nums">{item.qty}</span>
+                          <span className="w-8 text-center text-xs font-black tabular-nums">{item.qty}</span>
                           <Button
                             variant="ghost"
                             size="icon"
                             disabled={item.qty >= item.countInStock}
                             onClick={() => addToCartHandler(item, Math.min(item.countInStock, item.qty + 1))}
-                            className={cn("h-8 w-8 rounded-lg", item.qty >= item.countInStock && "opacity-20")}
+                            className={cn("h-7 w-7 rounded-lg", item.qty >= item.countInStock && "opacity-20")}
                           >
                             <Plus className="w-3 h-3" />
                           </Button>
@@ -151,7 +151,7 @@ const CartPage = () => {
                           variant="ghost"
                           size="icon"
                           onClick={() => removeFromCartHandler(item._id)}
-                          className="h-10 w-10 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full transition-all"
+                          className="h-9 w-9 text-muted-foreground hover:text-destructive hover:bg-destructive/10 rounded-full transition-all"
                         >
                           <Trash2 className="w-4 h-4" />
                         </Button>

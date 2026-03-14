@@ -70,30 +70,30 @@ const ShopPage = () => {
             <ShoppingBag className="h-5 w-5" />
             <span className="text-[10px] font-black uppercase tracking-[0.4em]">Universal Distribution</span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-black tracking-tighter italic">Advanced <br />Collection.</h1>
+          <h1 className="text-3xl md:text-5xl font-black tracking-tighter italic">Advanced <br />Collection.</h1>
         </div>
         
-        <div className="flex items-center gap-4">
-          <div className="relative group">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 w-full md:w-auto">
+          <div className="relative group flex-grow">
             <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within:text-primary transition-colors" />
             <input 
               type="text" 
-              placeholder="Search by SKU or Name..." 
+              placeholder="Search..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="h-12 w-64 md:w-80 pl-12 pr-6 bg-muted/50 border border-border/50 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all outline-none font-bold text-xs tracking-tight"
+              className="h-12 w-full md:w-80 pl-12 pr-6 bg-muted/50 border border-border/50 rounded-2xl focus:bg-background focus:ring-4 focus:ring-primary/10 transition-all outline-none font-bold text-xs tracking-tight"
             />
           </div>
           <Button 
             variant="primary" 
             onClick={() => setIsFilterOpen(!isFilterOpen)}
             className={cn(
-                "h-12 rounded-2xl px-6 gap-3 font-black text-[10px] uppercase tracking-widest transition-all",
+                "h-12 rounded-2xl px-6 gap-3 font-black text-[10px] uppercase tracking-widest transition-all shrink-0",
                 isFilterOpen ? "bg-primary text-primary-foreground border-primary hover:bg-primary/90" : "hover:bg-muted"
             )}
           >
             <SlidersHorizontal className="h-3.5 w-3.5" />
-            {isFilterOpen ? 'Hide Protocols' : 'Filter Protocols'}
+            {isFilterOpen ? 'Hide Filters' : 'Filter Products'}
           </Button>
         </div>
       </div>
@@ -104,9 +104,12 @@ const ShopPage = () => {
           {isFilterOpen && (
             <motion.aside
               initial={{ width: 0, opacity: 0, x: -50 }}
-              animate={{ width: 640, opacity: 1, x: 0 }}
+              animate={{ width: isFilterOpen ? 'auto' : 0, opacity: 1, x: 0 }}
               exit={{ width: 0, opacity: 0, x: -50 }}
-              className="hidden lg:block space-y-8 sticky top-32 h-[calc(150vh-0px)] overflow-y-auto overflow-x-hidden pr-4 custom-scrollbar no-scrollbar-x"
+              className={cn(
+                "lg:block space-y-8 sticky top-32 h-fit max-h-[calc(100vh-160px)] overflow-y-auto pr-4 custom-scrollbar no-scrollbar-x shrink-0 lg:w-64",
+                isFilterOpen ? "block w-full lg:w-64 mb-8 lg:mb-0" : "hidden"
+              )}
             >
               {/* Category Filter */}
               <div className="space-y-6">
@@ -116,7 +119,7 @@ const ShopPage = () => {
                     <button onClick={() => setSelectedCategories([])} className="text-[9px] font-black uppercase text-primary hover:underline">Reset</button>
                   )}
                 </div>
-                <div className="grid grid-cols-1 gap-1.5">
+                <div className="grid grid-cols-2 lg:grid-cols-1 gap-2">
                   {categories.map((cat) => (
                     <button
                       key={cat.id}
@@ -143,9 +146,9 @@ const ShopPage = () => {
 
               {/* Price Filter */}
               <div className="space-y-4 p-6 bg-muted/20 rounded-[2rem] border border-border/30">
-                <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">Valuation Range</h3>
+                <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">Valuation</h3>
                 <div className="space-y-6">
-                  <div className="flex gap-3">
+                  <div className="flex flex-col sm:flex-row gap-3">
                     <div className="space-y-1.5 flex-grow">
                       <label className="text-[8px] font-black uppercase text-muted-foreground/40 px-1">Min</label>
                       <input 
@@ -165,33 +168,19 @@ const ShopPage = () => {
                       />
                     </div>
                   </div>
-                  
-                  <div className="flex flex-wrap gap-2">
-                    {[500, 1000, 2000].map(p => (
-                      <Button 
-                        key={p}
-                        variant="ghost" 
-                        size="sm" 
-                        onClick={() => setPriceRange({ min: 0, max: p })}
-                        className="rounded-lg h-8 px-4 text-[10px] font-black uppercase bg-background border border-border/50"
-                      >
-                        Under ${p}
-                      </Button>
-                    ))}
-                  </div>
                 </div>
               </div>
 
               {/* Rating Filter */}
               <div className="space-y-4">
-                <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">Rating Protocol</h3>
-                <div className="flex flex-col gap-1.5">
+                <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/60">Rating</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-1 gap-2">
                   {[4, 3, 2].map((num) => (
                     <button
                       key={num}
                       onClick={() => setMinRating(prev => prev === num ? 0 : num)}
                       className={cn(
-                        "flex items-center gap-3 p-3.5 rounded-xl border transition-all",
+                        "flex items-center gap-3 p-3.5 rounded-xl border transition-all justify-center sm:justify-start",
                         minRating === num ? "bg-amber-500/10 border-amber-500/30 text-amber-600" : "bg-muted/20 border-transparent text-muted-foreground/40"
                       )}
                     >
@@ -219,25 +208,25 @@ const ShopPage = () => {
         </AnimatePresence>
 
         {/* Product Listing Area */}
-        <main className="flex-grow space-y-8">
+        <main className="flex-grow space-y-8 min-w-0">
           {/* Controls Bar */}
-          <div className="flex items-center justify-between bg-card border border-border/50 p-4 rounded-2xl shadow-sm">
-            <div className="flex items-center gap-4 text-xs font-bold text-muted-foreground px-4">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between bg-card border border-border/50 p-4 rounded-2xl shadow-sm gap-4">
+            <div className="flex items-center gap-4 text-xs font-bold text-muted-foreground px-2">
               <LayoutGrid className="h-4 w-4" />
-              <span className="uppercase tracking-widest">{isLoading ? 'Scanning...' : `${products.length} Units Located`}</span>
+              <span className="uppercase tracking-widest">{isLoading ? 'Scanning...' : `${products.length} Units`}</span>
             </div>
             
-            <div className="flex items-center gap-2">
-              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mr-2">Sort Order:</span>
+            <div className="flex items-center justify-between sm:justify-end gap-2 px-2">
+              <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">Sort:</span>
               <select 
                 value={sort}
                 onChange={(e) => setSort(e.target.value)}
-                className="h-10 bg-muted/50 border border-border/50 rounded-xl px-4 text-[10px] font-black uppercase tracking-widest outline-none focus:ring-2 focus:ring-primary/20 appearance-none cursor-pointer"
+                className="h-10 bg-muted/50 border border-border/50 rounded-xl px-4 text-[10px] font-black uppercase tracking-widest outline-none focus:ring-2 focus:ring-primary/20 appearance-none cursor-pointer min-w-[140px]"
               >
-                <option value="-createdAt">Newest Entry</option>
-                <option value="price">Price: Ascending</option>
-                <option value="-price">Price: Descending</option>
-                <option value="-rating">Highest Rated</option>
+                <option value="-createdAt">Newest</option>
+                <option value="price">Price: Low</option>
+                <option value="-price">Price: High</option>
+                <option value="-rating">Top Rated</option>
               </select>
             </div>
           </div>
@@ -261,7 +250,7 @@ const ShopPage = () => {
               <Button onClick={clearFilters} className="rounded-xl h-12 px-8 font-bold">Clear Filters</Button>
             </div>
           ) : (
-            <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-x-6 gap-y-10">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 2xl:grid-cols-3 gap-x-6 gap-y-10">
               <AnimatePresence mode="popLayout">
                 {products.map((p, idx) => (
                   <motion.div
