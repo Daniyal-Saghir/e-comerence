@@ -2,6 +2,10 @@ const express = require('express');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const path = require('path');
+const helmet = require('helmet');
+const mongoSanitize = require('express-mongo-sanitize');
+const compression = require('compression');
+const morgan = require('morgan');
 const errorHandler = require('./middleware/error');
 
 // Route files
@@ -12,14 +16,35 @@ const orderRoutes = require('./routes/orderRoutes');
 
 const app = express();
 
+// Enable CORS
+app.use(cors());
+
 // Body parser
 app.use(express.json());
 
 // Cookie parser
 app.use(cookieParser());
 
-// Enable CORS
-app.use(cors());
+// Set security HTTP headers
+app.use(helmet({
+  contentSecurityPolicy: false, // Disable for easier frontend integration, can be enabled with proper config
+}));
+
+// Prevent NoSQL injection
+app.use(mongoSanitize());
+
+// Compress responses
+app.use(compression());
+
+// Logging for development
+if (process.env.NODE_ENV === 'development') {
+  app.use(morgan('dev'));
+}
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.status(200).json({ status: 'UP', timestamp: new Date() });
+});
 
 // Mount routers
 app.use('/api/v1/auth', authRoutes);
