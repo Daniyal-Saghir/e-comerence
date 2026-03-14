@@ -21,10 +21,6 @@
     },
     {
       "source": "/(.*)",
-      "destination": "/backend/public/$1"
-    },
-    {
-      "source": "/(.*)",
       "destination": "/backend/public/index.html"
     }
   ],
