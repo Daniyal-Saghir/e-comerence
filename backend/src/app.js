@@ -14,8 +14,8 @@ const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const connectDB = require('./config/db');
-connectDB();
 const app = express();
+connectDB();
 
 // Enable CORS
 app.use(cors());
@@ -37,9 +37,6 @@ app.use(helmet({
 app.use(compression());
 
 // Logging for development
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-}
 
 // Health check endpoint
 app.get('/health', (req, res) => {
@@ -60,7 +57,7 @@ app.use(express.static(path.join(__dirname, "../public")));
 //   res.sendFile(path.resolve(__dirname, "../public/index.html"));
 // });
 // 2️⃣ React SPA fallback
-app.get('(.*)', (req, res) => {
+app.get('/*splat', (req, res) => {
   res.sendFile(path.resolve(__dirname, "../public", "index.html"));
 });
 
