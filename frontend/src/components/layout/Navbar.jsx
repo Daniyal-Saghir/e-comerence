@@ -18,12 +18,19 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [keyword, setKeyword] = useState('');
   const [showMobileSearch, setShowMobileSearch] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setShowMobileSearch(false);
+  }, [location.pathname]);
 
   const cartItemsCount = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
@@ -51,16 +58,17 @@ const Navbar = () => {
 
   return (
     <nav className={cn(
-        scrolled ? "py-2" : "py-4"
+        "fixed top-0 left-0 right-0 z-[100] transition-all duration-500",
+        scrolled ? "py-3" : "py-6 md:py-8"
     )}>
-      <div className="container mx-auto px-4 md:px-8 flex items-center justify-between gap-8">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-12 flex items-center justify-between gap-8">
         
         {/* Glassmorphism Background */}
         <div className={cn(
-            "absolute inset-x-4 md:inset-x-8 top-0 h-full rounded-[2rem] border transition-all duration-500 -z-10",
+            "absolute inset-0 transition-all duration-700 -z-10",
             scrolled 
-                ? "bg-background/80 backdrop-blur-2xl border-border/50 shadow-2xl shadow-primary/5 translate-y-0" 
-                : "bg-transparent border-transparent translate-y-2"
+                ? "bg-background/70 backdrop-blur-2xl border-b border-border/40 shadow-2xl opacity-100" 
+                : "bg-transparent border-transparent opacity-0"
         )} />
 
         {/* Brand/Logo */}
@@ -79,7 +87,7 @@ const Navbar = () => {
         {/* Dynamic Navigation Core - Hidden on small screens */}
         <div className="hidden lg:flex items-center gap-1 bg-muted/30 p-1 rounded-2xl border border-border/20 backdrop-blur-sm">
             {[
-                { name: 'Collections', path: '/' },
+                { name: 'Collections', path: '/shop' },
                 { name: 'Trending', path: '/search/trending' },
                 { name: 'Exclusive', path: '/search/exclusive' }
             ].map((link) => (
@@ -184,13 +192,113 @@ const Navbar = () => {
           <Button 
             variant="ghost" 
             size="icon" 
-            className="lg:hidden h-11 w-11 rounded-xl"
+            className="lg:hidden h-11 w-11 rounded-xl text-foreground"
             onClick={() => setShowMobileSearch(!showMobileSearch)}
           >
             {showMobileSearch ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
           </Button>
+
+          <Button 
+            variant="ghost" 
+            size="icon" 
+            className="lg:hidden h-11 w-11 rounded-xl bg-primary/10 text-primary border border-primary/20"
+            onClick={() => setIsMobileMenuOpen(true)}
+          >
+            <Menu className="h-5 w-5" />
+          </Button>
         </div>
       </div>
+
+      {/* Mobile Navigation Drawer */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+            <>
+                <motion.div 
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={() => setIsMobileMenuOpen(false)}
+                    className="fixed inset-0 bg-background/80 backdrop-blur-xl z-[110]"
+                />
+                <motion.div 
+                    initial={{ x: '100%' }}
+                    animate={{ x: 0 }}
+                    exit={{ x: '100%' }}
+                    transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+                    className="fixed top-0 right-0 bottom-0 w-[85%] max-w-[400px] bg-card border-l border-border/50 z-[120] shadow-2xl p-8 flex flex-col"
+                >
+                    <div className="flex items-center justify-between mb-12">
+                        <Link to="/" className="flex items-center gap-3">
+                            <div className="bg-primary p-1.5 rounded-lg">
+                                <ShoppingBag className="w-4 h-4 text-white" />
+                            </div>
+                            <span className="text-lg font-black uppercase tracking-tighter">Boutique.</span>
+                        </Link>
+                        <Button variant="ghost" size="icon" className="rounded-xl h-12 w-12" onClick={() => setIsMobileMenuOpen(false)}>
+                            <X className="h-6 w-6" />
+                        </Button>
+                    </div>
+
+                    <div className="flex flex-col gap-2">
+                        <p className="text-[10px] font-black uppercase tracking-[0.4em] text-muted-foreground/40 mb-4 px-4">Navigation</p>
+                        {[
+                            { name: 'Collections', path: '/shop', icon: Sparkles },
+                            { name: 'Trending', path: '/search/trending', icon: ShieldCheck },
+                            { name: 'Exclusive', path: '/search/exclusive', icon: Fingerprint }
+                        ].map((link) => (
+                            <Link key={link.name} to={link.path}>
+                                <Button 
+                                    variant="ghost" 
+                                    className={cn(
+                                        "w-full justify-start h-16 rounded-2xl px-6 font-black text-xs uppercase tracking-widest gap-4",
+                                        isActive(link.path) ? "bg-primary/10 text-primary" : "hover:bg-muted/50"
+                                    )}
+                                >
+                                    <link.icon className="w-5 h-5 opacity-40" />
+                                    {link.name}
+                                </Button>
+                            </Link>
+                        ))}
+                    </div>
+
+                    <div className="mt-auto space-y-4">
+                        <div className="h-px bg-border/40 w-full" />
+                        {userInfo ? (
+                            <div className="space-y-4">
+                                <Link to="/profile" className="block">
+                                    <Button className="w-full h-16 rounded-2xl bg-muted/20 border border-border/30 text-foreground justify-start px-6 gap-4">
+                                        <div className="h-8 w-8 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+                                            <User className="h-4 w-4" />
+                                        </div>
+                                        <div className="text-left">
+                                            <p className="text-[10px] font-black uppercase tracking-widest leading-none mb-1">{userInfo.name}</p>
+                                            <p className="text-[8px] font-bold text-muted-foreground uppercase tracking-widest leading-none">View Profile</p>
+                                        </div>
+                                    </Button>
+                                </Link>
+                                <Button 
+                                    onClick={handleLogout}
+                                    className="w-full h-16 rounded-2xl bg-destructive/10 text-destructive hover:bg-destructive/20 justify-center font-black uppercase tracking-[0.2em] text-[10px]"
+                                >
+                                    <LogOut className="w-4 h-4 mr-3" />
+                                    Terminate Session
+                                </Button>
+                            </div>
+                        ) : (
+                            <div className="grid grid-cols-2 gap-4">
+                                <Link to="/login">
+                                    <Button variant="outline" className="w-full h-16 rounded-2xl font-black uppercase text-[10px] tracking-widest">Login</Button>
+                                </Link>
+                                <Link to="/register">
+                                    <Button className="w-full h-16 rounded-2xl font-black uppercase text-[10px] tracking-widest shadow-lg shadow-primary/20">Init</Button>
+                                </Link>
+                            </div>
+                        )}
+                    </div>
+                </motion.div>
+            </>
+        )}
+      </AnimatePresence>
 
       {/* Mobile Search Overlay */}
       <AnimatePresence>

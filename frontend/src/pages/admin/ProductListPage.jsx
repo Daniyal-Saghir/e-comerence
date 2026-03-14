@@ -4,7 +4,7 @@ import {
   useCreateProductMutation
 } from '@/redux/slices/productsApiSlice';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Trash2, Edit, Plus, Package, Loader2, Star, BoxSelect, MoreVertical, Search, Filter, Layers, Zap, AlertTriangle, ArrowUpRight, ShoppingBag } from 'lucide-react';
+import { Trash2, Edit, Plus, Package, Loader2, Star, BoxSelect, MoreVertical, Search, Filter, Layers, Zap, AlertTriangle, ArrowUpRight, ShoppingBag, Sparkles } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -49,7 +49,8 @@ const ProductListPage = () => {
   const filteredProducts = products.filter(p =>
     p.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
     p.brand.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    p.category.toLowerCase().includes(searchTerm.toLowerCase())
+    p.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    (p.sku && p.sku.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   return (
@@ -124,9 +125,10 @@ const ProductListPage = () => {
               <thead>
                 <tr className="bg-muted/30 border-b border-border/50">
                   <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Product Assignment</th>
+                  <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">SKU Reference</th>
                   <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Classification</th>
                   <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Valuation</th>
-                  <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Availability</th>
+                  <th className="px-8 py-6 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Registry Status</th>
                   <th className="px-8 py-6 text-right text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">Modifications</th>
                 </tr>
               </thead>
@@ -159,6 +161,12 @@ const ProductListPage = () => {
                       </td>
                       <td className="px-8 py-6">
                         <div className="flex flex-col">
+                           <span className="font-mono text-[10px] font-black uppercase tracking-widest text-primary/60">{product.sku || 'N/A'}</span>
+                           <span className="text-[9px] font-bold text-muted-foreground/40 mt-1 uppercase tracking-widest">Internal SKU</span>
+                        </div>
+                      </td>
+                      <td className="px-8 py-6">
+                        <div className="flex flex-col">
                           <span className="text-sm font-black tracking-tight">{product.category}</span>
                           <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground opacity-60">{product.brand}</span>
                         </div>
@@ -170,23 +178,27 @@ const ProductListPage = () => {
                         </div>
                       </td>
                       <td className="px-8 py-6">
-                        <div className={cn(
-                          "inline-flex items-center px-4 py-2 rounded-2xl text-[10px] font-black uppercase tracking-widest border transition-colors",
-                          product.countInStock > 0
-                            ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-400 group-hover/row:bg-emerald-500/20"
-                            : "bg-destructive/10 border-destructive/20 text-destructive"
-                        )}>
-                          {product.countInStock > 0 ? (
-                            <>
-                              <Zap className="h-3 w-3 mr-2" />
-                              {product.countInStock} In Inventory
-                            </>
-                          ) : (
-                            <>
-                              <AlertTriangle className="h-3 w-3 mr-2" />
-                              Depleted Stock
-                            </>
-                          )}
+                        <div className="flex flex-col gap-2">
+                            <div className={cn(
+                            "inline-flex items-center w-fit px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest border transition-colors",
+                            product.countInStock > 0
+                                ? "bg-emerald-500/10 border-emerald-500/20 text-emerald-500"
+                                : "bg-destructive/10 border-destructive/20 text-destructive"
+                            )}>
+                            {product.countInStock > 0 ? (
+                                <Zap className="h-2.5 w-2.5 mr-1.5" />
+                            ) : (
+                                <AlertTriangle className="h-2.5 w-2.5 mr-1.5" />
+                            )}
+                            {product.countInStock > 0 ? `${product.countInStock} Units` : 'Stock Depleted'}
+                            </div>
+
+                            {product.isFeatured && (
+                                <div className="inline-flex items-center w-fit px-3 py-1 rounded-lg text-[9px] font-black uppercase tracking-widest bg-primary/10 border border-primary/20 text-primary">
+                                    <Sparkles className="h-2.5 w-2.5 mr-1.5" />
+                                    Featured
+                                </div>
+                            )}
                         </div>
                       </td>
                       <td className="px-8 py-6 text-right">

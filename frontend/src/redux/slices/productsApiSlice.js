@@ -9,7 +9,11 @@ export const productsApiSlice = apiSlice.injectEndpoints({
         url: PRODUCTS_URL,
         params: { 
           keyword: args.keyword, 
-          category: args.category 
+          category: args.category,
+          minPrice: args.minPrice,
+          maxPrice: args.maxPrice,
+          rating: args.rating,
+          sort: args.sort
         },
       }),
       keepUnusedDataFor: 5,

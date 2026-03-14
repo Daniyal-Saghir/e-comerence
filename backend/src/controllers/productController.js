@@ -6,30 +6,52 @@ const ErrorResponse = require('../utils/errorResponse');
 // @access  Public
 exports.getProducts = async (req, res, next) => {
   try {
-    const { keyword, category } = req.query;
+    const { keyword, category, minPrice, maxPrice, rating, sort } = req.query;
     
     let query = {};
 
+    // 1. Keyword Search
     if (keyword) {
-      if (keyword.toLowerCase() === 'trending') {
-        query.rating = { $gte: 4.5 };
-      } else if (keyword.toLowerCase() === 'exclusive') {
-        query.price = { $gte: 500 };
-      } else {
         query.$or = [
           { name: { $regex: keyword, $options: 'i' } },
           { category: { $regex: keyword, $options: 'i' } },
           { brand: { $regex: keyword, $options: 'i' } },
-          { description: { $regex: keyword, $options: 'i' } }
+          { description: { $regex: keyword, $options: 'i' } },
+          { sku: { $regex: keyword, $options: 'i' } },
+          { tags: { $in: [new RegExp(keyword, 'i')] } }
         ];
-      }
     }
 
+    // 2. Category Filter (Supports single or multiple)
     if (category) {
-      query.category = category;
+      const categories = category.split(',');
+      query.category = { $in: categories };
     }
 
-    const products = await Product.find(query);
+    // 3. Price Filter
+    if (minPrice || maxPrice) {
+      query.price = {};
+      if (minPrice) query.price.$gte = Number(minPrice);
+      if (maxPrice) query.price.$lte = Number(maxPrice);
+    }
+
+    // 4. Rating Filter
+    if (rating) {
+      query.rating = { $gte: Number(rating) };
+    }
+
+    // 5. Build Mongoose Query
+    let queryPromise = Product.find(query);
+
+    // 6. Sorting
+    if (sort) {
+      const sortBy = sort.split(',').join(' ');
+      queryPromise = queryPromise.sort(sortBy);
+    } else {
+      queryPromise = queryPromise.sort('-createdAt'); // Default to newest
+    }
+
+    const products = await queryPromise;
 
     res.status(200).json({
       success: true,
@@ -89,15 +111,20 @@ exports.deleteProduct = async (req, res, next) => {
 exports.createProduct = async (req, res, next) => {
   try {
     const product = new Product({
-      name: 'Sample name',
+      name: 'Alpha Asset',
+      sku: 'SKU-' + Math.random().toString(36).substring(2, 9).toUpperCase(),
       price: 0,
       user: req.user._id,
-      image: '/images/sample.jpg',
-      brand: 'Sample brand',
-      category: 'Sample category',
+      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&q=80',
+      images: [],
+      brand: 'Genesis',
+      category: 'Electronics',
       countInStock: 0,
       numReviews: 0,
-      description: 'Sample description',
+      description: 'System-generated baseline asset. Provide technical specifications and visual identity.',
+      isFeatured: false,
+      tags: [],
+      specifications: []
     });
 
     const createdProduct = await product.save();
@@ -118,12 +145,17 @@ exports.updateProduct = async (req, res, next) => {
   try {
     const {
       name,
+      sku,
       price,
       description,
       image,
+      images,
       brand,
       category,
       countInStock,
+      isFeatured,
+      specifications,
+      tags
     } = req.body;
 
     let product = await Product.findById(req.params.id);
@@ -132,13 +164,18 @@ exports.updateProduct = async (req, res, next) => {
       return next(new ErrorResponse('Product not found', 404));
     }
 
-    product.name = name;
-    product.price = price;
-    product.description = description;
-    product.image = image;
-    product.brand = brand;
-    product.category = category;
-    product.countInStock = countInStock;
+    product.name = name ?? product.name;
+    product.sku = sku ?? product.sku;
+    product.price = price ?? product.price;
+    product.description = description ?? product.description;
+    product.image = image ?? product.image;
+    product.images = images ?? product.images;
+    product.brand = brand ?? product.brand;
+    product.category = category ?? product.category;
+    product.countInStock = countInStock ?? product.countInStock;
+    product.isFeatured = isFeatured ?? product.isFeatured;
+    product.specifications = specifications ?? product.specifications;
+    product.tags = tags ?? product.tags;
 
     const updatedProduct = await product.save();
 

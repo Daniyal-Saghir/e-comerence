@@ -16,6 +16,7 @@ import UserListPage from './pages/admin/UserListPage';
 import ProductListPage from './pages/admin/ProductListPage';
 import ProductEditPage from './pages/admin/ProductEditPage';
 import OrderListPage from './pages/admin/OrderListPage';
+import ShopPage from './pages/ShopPage';
 import { PrivateRoute, AdminRoute } from './components/AuthRoutes';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -23,7 +24,7 @@ const App = () => {
   return (
     <div className="min-h-screen flex flex-col bg-background text-foreground selection:bg-primary/30">
       <Header />
-      <main className="flex-grow pt-28 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto w-full">
+      <main className="flex-grow pt-24 pb-12 w-full">
         <AnimatePresence mode="wait">
           <Routes>
             {/* Public Routes */}
@@ -34,6 +35,7 @@ const App = () => {
             <Route path="/search/:keyword/page/:pageNumber" element={<HomePage />} />
             <Route path="/product/:id" element={<ProductPage />} />
             <Route path="/cart" element={<CartPage />} />
+            <Route path="/shop" element={<ShopPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
 

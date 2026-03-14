@@ -28,7 +28,7 @@ const CartPage = () => {
   const totalItems = cartItems.reduce((acc, item) => acc + item.qty, 0);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+    <div className="max-w-[1440px] mx-auto px-6 md:px-12 py-12 space-y-12 min-h-[80vh]">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
         <div className="space-y-2">
             <h1 className="text-4xl font-black tracking-tight flex items-center gap-3">
@@ -185,33 +185,33 @@ const CartPage = () => {
                 
                 <div className="space-y-2 relative z-10">
                     <h3 className="text-2xl font-black tracking-tight">Order Summary</h3>
-                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/40">Checkout Breakdown</p>
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-background/40">Checkout Breakdown</p>
                 </div>
                 
                 <div className="space-y-6 relative z-10">
                   <div className="space-y-4 font-medium">
                     <div className="flex justify-between items-center group cursor-help">
-                      <span className="text-white/60 text-sm flex items-center gap-2">
-                        Subtotal <span className="text-[10px] bg-white/10 px-2 py-0.5 rounded-full">{totalItems} items</span>
+                      <span className="text-background/60 text-sm flex items-center gap-2">
+                        Subtotal <span className="text-[10px] bg-background/10 px-2 py-0.5 rounded-full">{totalItems} items</span>
                       </span>
-                      <span className="text-lg font-black tabular-nums">${cart.itemsPrice}</span>
+                      <span className="text-lg font-black tabular-nums text-background">${cart.itemsPrice}</span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-white/60 text-sm">Priority Shipping</span>
+                      <span className="text-background/60 text-sm">Priority Shipping</span>
                       <span className="text-sm font-bold text-emerald-400 tabular-nums">
                         {Number(cart.shippingPrice) === 0 ? "FREE" : `$${cart.shippingPrice}`}
                       </span>
                     </div>
                     <div className="flex justify-between items-center">
-                      <span className="text-white/60 text-sm">Estimated VAT</span>
-                      <span className="text-sm font-bold tabular-nums">${cart.taxPrice}</span>
+                      <span className="text-background/60 text-sm">Estimated VAT</span>
+                      <span className="text-sm font-bold tabular-nums text-background">${cart.taxPrice}</span>
                     </div>
                   </div>
 
-                  <div className="pt-8 border-t border-white/10 space-y-1">
+                  <div className="pt-8 border-t border-background/10 space-y-1">
                     <div className="flex justify-between items-end">
-                        <span className="text-white/40 text-[10px] font-black uppercase tracking-widest">Total Investment</span>
-                        <span className="text-4xl font-black tabular-nums text-white">${cart.totalPrice}</span>
+                        <span className="text-background/40 text-[10px] font-black uppercase tracking-widest">Total Investment</span>
+                        <span className="text-4xl font-black tabular-nums text-background">${cart.totalPrice}</span>
                     </div>
                   </div>
 
@@ -219,12 +219,12 @@ const CartPage = () => {
                     <Button
                       disabled={cartItems.length === 0}
                       onClick={checkoutHandler}
-                      className="w-full bg-white text-black hover:bg-white/90 h-16 rounded-2xl font-black text-base shadow-xl active:scale-95 transition-all group"
+                      className="w-full bg-background text-foreground hover:bg-background/90 h-16 rounded-2xl font-black text-base shadow-xl active:scale-95 transition-all group"
                     >
                       Checkout Now
                       <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                     </Button>
-                    <p className="text-[10px] text-center text-white/30 font-medium">
+                    <p className="text-[10px] text-center text-background/30 font-medium">
                         Standard encrypted checkout powered by Stripe & PayPal. By proceeding, you agree to our premium service terms.
                     </p>
                   </div>

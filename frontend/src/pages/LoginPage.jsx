@@ -69,24 +69,24 @@ const LoginPage = () => {
       <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-[120px] -z-10 animate-pulse delay-700" />
       
       <motion.div
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="w-full max-w-md relative"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-sm relative"
       >
-        <div className="absolute -inset-1 bg-gradient-to-r from-primary/30 to-blue-500/30 rounded-[2.5rem] blur-2xl opacity-20" />
+        <div className="absolute -inset-1 bg-gradient-to-r from-primary/20 to-blue-500/20 rounded-[2rem] blur-xl opacity-20" />
         
-        <div className="relative bg-card/80 backdrop-blur-3xl border border-border/50 rounded-[2.5rem] shadow-2xl p-8 md:p-10 space-y-6">
-            <div className="space-y-3 text-center">
+        <div className="relative bg-card/90 backdrop-blur-3xl border border-border/50 rounded-[2.5rem] shadow-2xl p-6 md:p-8 space-y-5">
+            <div className="space-y-2 text-center">
                 <motion.div 
-                    initial={{ y: -10 }}
-                    animate={{ y: 0 }}
-                    className="inline-flex items-center justify-center w-14 h-14 rounded-2xl bg-primary/10 text-primary mb-1 shadow-inner"
+                    initial={{ scale: 0.8 }}
+                    animate={{ scale: 1 }}
+                    className="inline-flex items-center justify-center w-12 h-12 rounded-2xl bg-primary/10 text-primary mb-1 shadow-inner"
                 >
-                    <ShieldCheck className="w-7 h-7" />
+                    <ShieldCheck className="w-6 h-6" />
                 </motion.div>
-                <div className="space-y-1">
-                    <h1 className="text-3xl font-black tracking-tighter">Access Terminal</h1>
-                    <p className="text-xs text-muted-foreground font-medium uppercase tracking-wider">Secure Boutique Authentication</p>
+                <div className="space-y-0.5">
+                    <h1 className="text-2xl font-black tracking-tighter">Access Terminal</h1>
+                    <p className="text-[9px] text-muted-foreground font-black uppercase tracking-[0.2em]">Secure Authentication Node</p>
                 </div>
             </div>
 

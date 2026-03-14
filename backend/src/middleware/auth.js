@@ -24,10 +24,18 @@ exports.protect = async (req, res, next) => {
     const decodedToken = await admin.auth().verifyIdToken(token);
     
     // Find user in MongoDB by firebaseUid
-    const user = await User.findOne({ firebaseUid: decodedToken.uid });
+    let user = await User.findOne({ firebaseUid: decodedToken.uid });
 
     if (!user) {
-      return next(new ErrorResponse('User not found in database', 404));
+      // Auto-sync: Create user if they exist in Firebase but not in our DB
+      user = await User.create({
+        name: decodedToken.name || decodedToken.email.split('@')[0],
+        email: decodedToken.email,
+        firebaseUid: decodedToken.uid,
+        avatar: decodedToken.picture || '',
+        role: 'customer'
+      });
+      console.log(`Auto-synced new user: ${user.email}`);
     }
 
     if (!user.isActive) {

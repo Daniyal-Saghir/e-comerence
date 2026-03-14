@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { useGetMyOrdersQuery } from '@/redux/slices/ordersApiSlice';
 import { motion, AnimatePresence } from 'framer-motion';
-import { User, Mail, Shield, CheckCircle2, Clock, ShoppingBag, ArrowRight, Calendar, Package, ChevronRight, Settings, LogOut } from 'lucide-react';
+import { User, Mail, Shield, CheckCircle2, Clock, ShoppingBag, ArrowRight, Calendar, Package, ChevronRight, Settings, LogOut, Truck } from 'lucide-react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
@@ -62,7 +62,7 @@ const ProfilePage = () => {
 
             <div className="relative z-10 flex flex-col items-center text-center space-y-6">
               <div className="relative group">
-                <div className="w-28 h-28 rounded-[2rem] bg-white/5 border border-white/10 flex items-center justify-center text-white backdrop-blur-xl group-hover:scale-105 transition-transform duration-500">
+                <div className="w-28 h-28 rounded-[2rem] bg-background/5 border border-background/10 flex items-center justify-center text-background backdrop-blur-xl group-hover:scale-105 transition-transform duration-500">
                   <User className="w-12 h-12 opacity-80" />
                 </div>
                 {userInfo.role === 'admin' && (
@@ -73,13 +73,13 @@ const ProfilePage = () => {
               </div>
 
               <div className="space-y-1">
-                <h2 className="text-2xl font-black tracking-tight text-white">{userInfo.name}</h2>
-                <p className="text-sm text-white/40 font-medium">{userInfo.email}</p>
+                <h2 className="text-2xl font-black tracking-tight text-background">{userInfo.name}</h2>
+                <p className="text-sm text-background/40 font-medium">{userInfo.email}</p>
               </div>
 
               <div className={cn(
                 "px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-[0.2em] border",
-                userInfo.role === 'admin' ? "bg-amber-500/20 border-amber-500/30 text-amber-400" : "bg-white/10 border-white/10 text-white/60"
+                userInfo.role === 'admin' ? "bg-amber-500/20 border-amber-500/30 text-amber-400" : "bg-background/10 border-background/10 text-background/60"
               )}>
                 {userInfo.role} Environment
               </div>
@@ -87,16 +87,16 @@ const ProfilePage = () => {
 
             <div className="mt-12 pt-10 border-t border-white/5 space-y-6 relative z-10">
               <div className="flex items-center justify-between text-xs">
-                <span className="text-white/20 font-black uppercase tracking-widest flex items-center gap-2">
+                <span className="text-background/20 font-black uppercase tracking-widest flex items-center gap-2">
                   <Calendar className="h-3 w-3" /> Entry Milestone
                 </span>
-                <span className="text-white/60 font-bold">{new Date(userInfo.createdAt).toLocaleDateString()}</span>
+                <span className="text-background/60 font-bold">{new Date(userInfo.createdAt).toLocaleDateString()}</span>
               </div>
               <div className="flex items-center justify-between text-xs">
-                <span className="text-white/20 font-black uppercase tracking-widest flex items-center gap-2">
+                <span className="text-background/20 font-black uppercase tracking-widest flex items-center gap-2">
                   <Shield className="h-3 w-3" /> Security Class
                 </span>
-                <span className="text-white/60 font-bold">Encrypted OAuth</span>
+                <span className="text-background/60 font-bold">Encrypted OAuth</span>
               </div>
             </div>
           </motion.div>

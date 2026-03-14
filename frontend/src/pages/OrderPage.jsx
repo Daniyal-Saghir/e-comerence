@@ -61,7 +61,7 @@ const OrderPage = () => {
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-12">
+    <div className="max-w-[1440px] mx-auto px-6 md:px-12 py-12 space-y-12">
       {/* Header Section */}
       <div className="flex flex-col md:flex-row md:items-center justify-between gap-8 border-b border-border pb-12">
         <div className="space-y-2">
@@ -234,31 +234,31 @@ const OrderPage = () => {
 
             <div className="space-y-2 relative z-10">
               <h3 className="text-3xl font-black tracking-tighter">Valuation</h3>
-              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">Financial Record</p>
+              <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-background/30">Financial Record</p>
             </div>
 
             <div className="space-y-8 relative z-10">
               <div className="space-y-4 font-medium">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-white/40 uppercase tracking-widest text-[10px]">Net Value</span>
-                  <span className="text-lg font-black tabular-nums">${(order.totalPrice - order.taxPrice - order.shippingPrice).toFixed(2)}</span>
+                  <span className="text-background/40 uppercase tracking-widest text-[10px]">Net Value</span>
+                  <span className="text-lg font-black tabular-nums text-background">${(order.totalPrice - order.taxPrice - order.shippingPrice).toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-white/40 uppercase tracking-widest text-[10px]">Priority Freight</span>
+                  <span className="text-background/40 uppercase tracking-widest text-[10px]">Priority Freight</span>
                   <span className="text-sm font-black text-emerald-400">
                     {order.shippingPrice === 0 ? 'COMPLIMENTARY' : `$${order.shippingPrice.toFixed(2)}`}
                   </span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-white/40 uppercase tracking-widest text-[10px]">Regulatory VAT</span>
-                  <span className="text-sm font-black tabular-nums text-white/80">${order.taxPrice.toFixed(2)}</span>
+                  <span className="text-background/40 uppercase tracking-widest text-[10px]">Regulatory VAT</span>
+                  <span className="text-sm font-black tabular-nums text-background/80">${order.taxPrice.toFixed(2)}</span>
                 </div>
               </div>
 
-              <div className="pt-8 border-t border-white/10 space-y-1">
+              <div className="pt-8 border-t border-background/10 space-y-1">
                 <div className="flex justify-between items-end">
-                  <span className="text-white/20 text-[10px] font-black uppercase tracking-[0.3em]">Gross Investment</span>
-                  <span className="text-5xl font-black tabular-nums text-white tracking-tighter">${order.totalPrice.toFixed(2)}</span>
+                  <span className="text-background/20 text-[10px] font-black uppercase tracking-[0.3em]">Gross Investment</span>
+                  <span className="text-5xl font-black tabular-nums text-background tracking-tighter">${order.totalPrice.toFixed(2)}</span>
                 </div>
               </div>
 
@@ -267,7 +267,7 @@ const OrderPage = () => {
                   <Button
                     onClick={payHandler}
                     disabled={loadingPay}
-                    className="w-full bg-white text-black hover:bg-white/90 h-20 rounded-2xl font-black text-lg shadow-xl shadow-white/5 active:scale-95 transition-all group"
+                    className="w-full bg-background text-foreground hover:bg-background/90 h-20 rounded-2xl font-black text-lg shadow-xl shadow-background/5 active:scale-95 transition-all group"
                   >
                     {loadingPay ? <Loader2 className="w-6 h-6 animate-spin" /> : (
                       <>
@@ -293,7 +293,7 @@ const OrderPage = () => {
                   </Button>
                 )}
 
-                <p className="text-[10px] text-center text-white/20 font-medium leading-snug max-w-[240px] mx-auto">
+                <p className="text-[10px] text-center text-background/20 font-medium leading-snug max-w-[240px] mx-auto">
                   This order is verified and secured. Reference ID: {order._id.substring(0, 8)} for all inquiries.
                 </p>
               </div>

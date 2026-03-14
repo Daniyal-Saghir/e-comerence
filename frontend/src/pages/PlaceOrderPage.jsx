@@ -166,7 +166,7 @@ const PlaceOrderPage = () => {
              
             <div className="space-y-2 relative z-10">
                 <h3 className="text-3xl font-black tracking-tighter">Order Summary</h3>
-                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-white/30">Commitment Summary</p>
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-background/30">Commitment Summary</p>
             </div>
 
             {error && (
@@ -179,25 +179,26 @@ const PlaceOrderPage = () => {
             <div className="space-y-8 relative z-10">
               <div className="space-y-4 font-medium">
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-white/40 uppercase tracking-widest">Subtotal</span>
-                  <span className="text-lg font-black tabular-nums">${cart.itemsPrice}</span>
+                  <span className="text-background/40 uppercase tracking-widest">Subtotal</span>
+                  <span className="text-lg font-black tabular-nums text-background">${cart.itemsPrice}</span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-white/40 uppercase tracking-widest">Priority Network Shipping</span>
+                  <span className="text-background/40 uppercase tracking-widest">Priority Network Shipping</span>
                   <span className="text-sm font-black text-emerald-400">
                     {Number(cart.shippingPrice) === 0 ? 'COMPLIMENTARY' : `$${cart.shippingPrice}`}
                   </span>
                 </div>
                 <div className="flex justify-between items-center text-sm">
-                  <span className="text-white/40 uppercase tracking-widest">Regulatory VAT (15%)</span>
-                  <span className="text-sm font-black tabular-nums text-white/80">${cart.taxPrice}</span>
+                  <span className="text-background/40 uppercase tracking-widest">Regulatory VAT (15%)</span>
+                  <span className="text-sm font-black tabular-nums text-background/80">${cart.taxPrice}</span>
                 </div>
+                {/* Fixed incorrect text-white in sub-elements */}
               </div>
 
-              <div className="pt-8 border-t border-white/10 space-y-1">
+              <div className="pt-8 border-t border-background/10 space-y-1">
                 <div className="flex justify-between items-end">
-                    <span className="text-white/20 text-[10px] font-black uppercase tracking-[0.3em]">Total Value</span>
-                    <span className="text-5xl font-black tabular-nums text-white tracking-tighter">${cart.totalPrice}</span>
+                    <span className="text-background/20 text-[10px] font-black uppercase tracking-[0.3em]">Total Value</span>
+                    <span className="text-5xl font-black tabular-nums text-background tracking-tighter">${cart.totalPrice}</span>
                 </div>
               </div>
 
@@ -205,7 +206,7 @@ const PlaceOrderPage = () => {
                 <Button
                   disabled={cart.cartItems.length === 0 || isLoading}
                   onClick={placeOrderHandler}
-                  className="w-full bg-white text-black hover:bg-white/90 h-20 rounded-2xl font-black text-lg shadow-xl shadow-white/5 active:scale-95 transition-all group"
+                  className="w-full bg-background text-foreground hover:bg-background/90 h-20 rounded-2xl font-black text-lg shadow-xl shadow-background/5 active:scale-95 transition-all group"
                 >
                   {isLoading ? (
                     <motion.div 
@@ -222,9 +223,9 @@ const PlaceOrderPage = () => {
                   )}
                 </Button>
 
-                <div className="bg-white/5 p-4 rounded-xl flex items-center gap-3 border border-white/5">
+                <div className="bg-background/5 p-4 rounded-xl flex items-center gap-3 border border-background/5">
                     <ShieldCheck className="h-4 w-4 text-emerald-400" />
-                    <p className="text-[10px] font-bold text-white/40 leading-snug">
+                    <p className="text-[10px] font-bold text-background/40 leading-snug">
                         By completing this transaction, you authorize the secure charge of the total amount shown.
                     </p>
                 </div>
