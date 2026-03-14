@@ -30,8 +30,7 @@ app.use(helmet({
   contentSecurityPolicy: false, // Disable for easier frontend integration, can be enabled with proper config
 }));
 
-// Prevent NoSQL injection
-app.use(mongoSanitize());
+
 
 // Compress responses
 app.use(compression());
