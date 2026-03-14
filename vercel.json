@@ -14,28 +14,17 @@
       }
     }
   ],
-  "routes": [
-    {
-      "src": "^/api/(.*)",
-      "dest": "/backend/src/app.js"
-    },
-    {
-      "src": "^(.*)$",
-      "dest": "/backend/public/index.html"
-    }
-  ],
   "rewrites": [
     {
-      "source": "/api/(.*)",
+      "source": "/api/v1/:path*",
       "destination": "/backend/src/app.js"
     },
     {
-      "source": "^(.*)",
+      "source": "/((?!api|health).*)",
       "destination": "/backend/public/index.html"
     }
   ],
   "env": {
-    "NODE_ENV": "production",
-    "MONGO_URI": "mongodb+srv://daniyalsaghir:daniyalmongodb@cluster0.nj9nrot.mongodb.net/ecom?appName=Cluster0"
+    "NODE_ENV": "production"
   }
 }
