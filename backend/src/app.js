@@ -56,9 +56,9 @@ app.use('/api/v1/orders', orderRoutes);
 const NODE_ENV = process.env.NODE_ENV || 'development';
 if (NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../public')));
-  
-  app.get('(.*)', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../public', 'index.html'));
+
+  app.use((req, res) => {
+    res.sendFile(path.resolve(__dirname, '../public/index.html'));
   });
 } else {
   app.get('/', (req, res) => {
