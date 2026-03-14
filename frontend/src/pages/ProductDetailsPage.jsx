@@ -76,7 +76,7 @@ const ProductDetailsPage = () => {
   };
 
   return (
-    <div className="max-w-[1440px] mx-auto px-6 md:px-12 py-32 space-y-20">
+    <div className="max-w-[1440px] mx-auto px-4 md:px-12 py-20 md:py-32 space-y-12 md:space-y-20 overflow-x-hidden">
       <motion.div 
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
@@ -172,7 +172,7 @@ const ProductDetailsPage = () => {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.1 }}
-              className="text-4xl md:text-5xl lg:text-6xl font-black tracking-[calc(-0.04em)] uppercase italic leading-[0.9] text-foreground"
+              className="text-3xl md:text-5xl lg:text-6xl font-black tracking-[calc(-0.04em)] uppercase italic leading-[0.9] text-foreground"
             >
               {product.name}
             </motion.h1>
@@ -189,13 +189,13 @@ const ProductDetailsPage = () => {
             </div>
           </div>
 
-          <div className="flex flex-col gap-2 p-8 rounded-[2.5rem] bg-foreground text-background relative overflow-hidden group">
-            <div className="absolute top-0 right-0 p-8 opacity-[0.05] group-hover:scale-110 transition-transform duration-[2s]">
-                <Box className="h-24 w-24" />
+          <div className="flex flex-col gap-2 p-6 md:p-8 rounded-[2.5rem] bg-foreground text-background relative overflow-hidden group">
+            <div className="absolute top-0 right-0 p-6 md:p-8 opacity-[0.05] group-hover:scale-110 transition-transform duration-[2s]">
+                <Box className="h-20 w-20 md:h-24 md:w-24" />
             </div>
             <span className="text-[9px] font-black uppercase tracking-[0.4em] opacity-40 relative z-10">Valuation</span>
-            <div className="text-5xl font-black tracking-[calc(-0.04em)] tabular-nums relative z-10 flex items-start">
-              <span className="text-2xl mt-1.5 mr-1 opacity-50">$</span>
+            <div className="text-4xl md:text-5xl font-black tracking-[calc(-0.04em)] tabular-nums relative z-10 flex items-start">
+              <span className="text-xl md:text-2xl mt-1 md:mt-1.5 mr-1 opacity-50">$</span>
               {product.price.toFixed(2)}
             </div>
           </div>
@@ -316,7 +316,7 @@ const ProductDetailsPage = () => {
                     <MessageSquare className="h-4 w-4" />
                     <span className="text-[8px] font-black uppercase tracking-[0.4em] text-muted-foreground">Sync</span>
                 </div>
-                <h2 className="text-4xl md:text-5xl font-black tracking-tight italic uppercase text-foreground leading-none">
+                <h2 className="text-3xl md:text-5xl font-black tracking-tight italic uppercase text-foreground leading-none">
                     Feedback.
                 </h2>
             </div>

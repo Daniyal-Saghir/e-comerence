@@ -110,14 +110,14 @@ const Navbar = () => {
         <div className="flex items-center gap-3">
           
           {/* Search Functionality */}
-          <form onSubmit={submitHandler} className="hidden xl:flex relative group">
+          <form onSubmit={submitHandler} className="hidden lg:flex relative group">
                 <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground group-focus-within/field:text-primary transition-colors" />
                 <input
                     type="search"
-                    placeholder="Discover gems..."
+                    placeholder="Search..."
                     value={keyword}
                     onChange={(e) => setKeyword(e.target.value)}
-                    className="h-10 w-40 focus:w-56 pl-10 pr-4 bg-muted/30 border border-border/10 rounded-xl text-[10px] font-bold transition-all outline-none focus:bg-background focus:ring-2 focus:ring-primary/20"
+                    className="h-10 w-32 xl:w-40 focus:w-48 xl:focus:w-56 pl-10 pr-4 bg-muted/30 border border-border/10 rounded-xl text-[10px] font-bold transition-all outline-none focus:bg-background focus:ring-2 focus:ring-primary/20"
                 />
           </form>
 
@@ -148,63 +148,56 @@ const Navbar = () => {
             </Button>
           </Link>
 
-          {/* User Status / Authentication */}
-          {userInfo ? (
-            <div className="flex items-center gap-2">
-              <Link to="/profile">
-                <Button 
-                    variant="outline" 
-                    className={cn(
-                        "h-10 rounded-xl px-3 flex items-center gap-2 border-border/30 hover:border-primary/30 transition-all group",
-                        isActive('/profile') ? "bg-primary/5 border-primary/20" : "bg-muted/10"
-                    )}
-                >
-                  <div className="h-6 w-6 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
-                    <User className="h-3.5 w-3.5" />
-                  </div>
-                  <span className="hidden sm:inline text-[10px] font-black uppercase tracking-widest leading-none">{userInfo.name.split(' ')[0]}</span>
-                </Button>
-              </Link>
-              
-              <div className="h-6 w-px bg-border/40 mx-1 hidden sm:block" />
-
-              {userInfo.role === 'admin' && (
-                <Link to="/admin/dashboard">
-                  <Button variant="ghost" size="icon" className="h-11 w-11 rounded-xl hover:bg-primary/10 text-primary transition-all">
-                    <LayoutDashboard className="h-5 w-5" />
+          {/* User Status / Authentication - Hidden on mobile, moved to Drawer */}
+          <div className="hidden lg:flex items-center gap-2">
+            {userInfo ? (
+              <div className="flex items-center gap-2">
+                <Link to="/profile">
+                  <Button 
+                      variant="outline" 
+                      className={cn(
+                          "h-10 rounded-xl px-3 flex items-center gap-2 border-border/30 hover:border-primary/30 transition-all group",
+                          isActive('/profile') ? "bg-primary/5 border-primary/20" : "bg-muted/10"
+                      )}
+                  >
+                    <div className="h-6 w-6 rounded-lg bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
+                      <User className="h-3.5 w-3.5" />
+                    </div>
+                    <span className="hidden sm:inline text-[10px] font-black uppercase tracking-widest leading-none">{userInfo.name.split(' ')[0]}</span>
                   </Button>
                 </Link>
-              )}
+                
+                <div className="h-6 w-px bg-border/40 mx-1 hidden sm:block" />
 
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleLogout}
-                className="h-11 w-11 rounded-xl text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all"
-              >
-                <LogOut className="h-5 w-5" />
-              </Button>
-            </div>
-          ) : (
-            <div className="flex items-center gap-3">
-              <Link to="/login">
-                <Button variant="ghost" className="h-10 rounded-xl text-[10px] font-black uppercase tracking-widest px-4 transition-all hover:bg-muted/50">Terminal Access</Button>
-              </Link>
-              <Link to="/register" className="hidden sm:block">
-                <Button className="h-10 rounded-xl text-[10px] font-black uppercase tracking-widest px-6 shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all">Initialize</Button>
-              </Link>
-            </div>
-          )}
+                {userInfo.role === 'admin' && (
+                  <Link to="/admin/dashboard">
+                    <Button variant="ghost" size="icon" className="h-11 w-11 rounded-xl hover:bg-primary/10 text-primary transition-all">
+                      <LayoutDashboard className="h-5 w-5" />
+                    </Button>
+                  </Link>
+                )}
+
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={handleLogout}
+                  className="h-11 w-11 rounded-xl text-muted-foreground hover:text-destructive hover:bg-destructive/10 transition-all"
+                >
+                  <LogOut className="h-5 w-5" />
+                </Button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-3">
+                <Link to="/login">
+                  <Button variant="ghost" className="h-10 rounded-xl text-[10px] font-black uppercase tracking-widest px-4 transition-all hover:bg-muted/50">Terminal Access</Button>
+                </Link>
+                <Link to="/register" className="hidden sm:block">
+                  <Button className="h-10 rounded-xl text-[10px] font-black uppercase tracking-widest px-6 shadow-xl shadow-primary/20 hover:scale-105 active:scale-95 transition-all">Initialize</Button>
+                </Link>
+              </div>
+            )}
+          </div>
           
-          <Button 
-            variant="ghost" 
-            size="icon" 
-            className="lg:hidden h-11 w-11 rounded-xl text-foreground"
-            onClick={() => setShowMobileSearch(!showMobileSearch)}
-          >
-            {showMobileSearch ? <X className="h-5 w-5" /> : <Search className="h-5 w-5" />}
-          </Button>
-
           <Button 
             variant="ghost" 
             size="icon" 
