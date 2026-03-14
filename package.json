@@ -1,6 +1,11 @@
 {
   "name": "e-commerce",
   "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
   "description": "E-Commerce App Root",
   "scripts": {
     "dev:backend": "npm run dev --prefix backend",
