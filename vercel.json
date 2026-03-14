@@ -15,14 +15,11 @@
     }
   ],
   "rewrites": [
-    {
-      "source": "/api/v1/:path*",
+{
+      "source": "/(.*)",
       "destination": "/backend/src/app.js"
-    },
-    {
-      "source": "/((?!api|health).*)",
-      "destination": "/backend/public/index.html"
     }
+
   ],
   "env": {
     "NODE_ENV": "production"

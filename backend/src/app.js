@@ -55,14 +55,14 @@ app.use('/api/v1/orders', orderRoutes);
 
 
 // 1️⃣ Serve static files (images, js, css)
-// app.use(express.static(path.join(__dirname, "../public")));
+app.use(express.static(path.join(__dirname, "../public")));
 // app.get('*', (req, res) => {
 //   res.sendFile(path.resolve(__dirname, "../public/index.html"));
 // });
 // 2️⃣ React SPA fallback
-// app.get((req, res) => {
-//   res.sendFile(path.resolve(__dirname, "../public/index.html"));
-// });
+ app.get((req, res) => {
+   res.sendFile(path.resolve(__dirname, "../public/index.html"));
+ });
 
 // Custom error handler (must be after routes)
 app.use(errorHandler);
