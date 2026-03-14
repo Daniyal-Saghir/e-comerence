@@ -60,10 +60,9 @@ app.use(express.static(path.join(__dirname, "../public")));
 //   res.sendFile(path.resolve(__dirname, "../public/index.html"));
 // });
 // 2️⃣ React SPA fallback
-app.get('*', (req, res) => {
+app.get('(.*)', (req, res) => {
   res.sendFile(path.resolve(__dirname, "../public", "index.html"));
 });
-
 
 // Custom error handler (must be after routes)
 app.use(errorHandler);
