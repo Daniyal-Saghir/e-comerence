@@ -10,7 +10,7 @@ import { useState } from 'react';
 const ProductCard = ({ product }) => {
   const dispatch = useDispatch();
   const [added, setAdded] = useState(false);
-  
+
   // 3D Tilt Effect Logic
   const x = useMotionValue(0);
   const y = useMotionValue(0);
@@ -39,9 +39,15 @@ const ProductCard = ({ product }) => {
   const addToCartHandler = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    dispatch(addToCart({ ...product, qty: 1 }));
-    setAdded(true);
-    setTimeout(() => setAdded(false), 2000);
+
+    // Debugging identify structure
+    console.log('Adding to cart from card:', product?._id || product?.id);
+
+    if (product) {
+      dispatch(addToCart({ ...product, qty: 1 }));
+      setAdded(true);
+      setTimeout(() => setAdded(false), 2000);
+    }
   };
 
   return (
@@ -53,13 +59,13 @@ const ProductCard = ({ product }) => {
       onMouseLeave={handleMouseLeave}
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-      className="group relative bg-card rounded-[2rem] border border-border/50 shadow-sm hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 overflow-hidden flex flex-col h-full perspective-1000"
+      className="group relative bg-card rounded-[2rem] border border-border/50 shadow-sm hover:shadow-2xl hover:shadow-primary/10 transition-all duration-500 flex flex-col h-full perspective-1000"
     >
       {/* 3D Inner Content */}
       <div style={{ transform: "translateZ(30px)", transformStyle: "preserve-3d" }} className="flex flex-col h-full">
         {/* Image Container */}
-        <Link 
-          to={`/product/${product._id}`} 
+        <Link
+          to={`/product/${product._id}`}
           className="relative aspect-[4/5] overflow-hidden bg-muted block m-3 rounded-[1.5rem] shadow-inner"
         >
           <img
@@ -67,27 +73,27 @@ const ProductCard = ({ product }) => {
             alt={product.name}
             className="object-cover w-full h-full transition-transform duration-700 ease-out group-hover:scale-110"
           />
-          
+
           {/* Shine Effect */}
           <div className="absolute inset-0 bg-gradient-to-tr from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
 
           {/* Overlay on hover */}
           <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-2">
-              <Button size="icon" variant="secondary" className="h-8 w-8 rounded-full scale-90 group-hover:scale-100 transition-transform duration-300 shadow-xl">
-                  <Eye className="h-3 w-3" />
-              </Button>
+            <Button size="icon" variant="secondary" className="h-8 w-8 rounded-full scale-90 group-hover:scale-100 transition-transform duration-300 shadow-xl">
+              <Eye className="h-3 w-3" />
+            </Button>
           </div>
 
           <div className="absolute top-3 left-3 flex flex-col gap-1.5">
             {product.isFeatured && (
-                <div className="bg-primary/90 backdrop-blur-md text-white text-[7px] font-black px-2 py-0.5 rounded-full shadow-lg tracking-widest uppercase">
-                    Featured
-                </div>
+              <div className="bg-primary/90 backdrop-blur-md text-white text-[7px] font-black px-2 py-0.5 rounded-full shadow-lg tracking-widest uppercase">
+                Featured
+              </div>
             )}
             {product.countInStock === 0 && (
-                <div className="bg-destructive/90 backdrop-blur-md text-white text-[7px] font-black px-2 py-0.5 rounded-full shadow-lg tracking-widest uppercase">
-                    Sold Out
-                </div>
+              <div className="bg-destructive/90 backdrop-blur-md text-white text-[7px] font-black px-2 py-0.5 rounded-full shadow-lg tracking-widest uppercase">
+                Sold Out
+              </div>
             )}
           </div>
         </Link>
@@ -107,7 +113,7 @@ const ProductCard = ({ product }) => {
           <Link to={`/product/${product._id}`} className="block mb-1 group-hover:text-primary transition-colors">
             <h3 className="font-black text-[13px] tracking-tight leading-tight line-clamp-1 italic uppercase">{product.name}</h3>
           </Link>
-          
+
           <div className="flex items-center gap-2 mb-3">
             <span className="text-[7px] font-black text-muted-foreground/30 uppercase tracking-[0.2em]">SKU: {product.sku || 'N/A'}</span>
           </div>
@@ -117,36 +123,37 @@ const ProductCard = ({ product }) => {
               <span className="text-[7px] text-muted-foreground font-black uppercase tracking-[0.2em] opacity-40">Value</span>
               <span className="text-sm font-black text-foreground tabular-nums tracking-tighter">${product.price.toFixed(2)}</span>
             </div>
-            
+
             <Button
               size="icon"
               onClick={addToCartHandler}
-              disabled={product.countInStock === 0 || added}
+              disabled={product.countInStock == 0 || added}
+              style={{ transform: "translateZ(60px)" }}
               className={cn(
-                  "h-9 w-9 rounded-xl shadow-lg transition-all active:scale-90",
-                  added ? "bg-emerald-500 hover:bg-emerald-600 shadow-emerald-500/20" : "bg-primary shadow-primary/20 hover:shadow-primary/40"
+                "h-9 w-9 rounded-xl shadow-lg transition-all active:scale-95 relative z-[100]",
+                added ? "bg-emerald-500 hover:bg-emerald-600 shadow-emerald-500/20" : "bg-primary shadow-primary/20 hover:shadow-primary/40"
               )}
             >
               <AnimatePresence mode="wait">
-                  {added ? (
-                      <motion.div
-                          key="check"
-                          initial={{ scale: 0, rotate: -45 }}
-                          animate={{ scale: 1, rotate: 0 }}
-                          exit={{ scale: 0 }}
-                      >
-                          <Check className="w-4 h-4" />
-                      </motion.div>
-                  ) : (
-                      <motion.div
-                          key="cart"
-                          initial={{ scale: 0 }}
-                          animate={{ scale: 1 }}
-                          exit={{ scale: 0 }}
-                      >
-                          <ShoppingCart className="w-4 h-4" />
-                      </motion.div>
-                  )}
+                {added ? (
+                  <motion.div
+                    key="check"
+                    initial={{ scale: 0, rotate: -45 }}
+                    animate={{ scale: 1, rotate: 0 }}
+                    exit={{ scale: 0 }}
+                  >
+                    <Check className="w-4 h-4" />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="cart"
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    exit={{ scale: 0 }}
+                  >
+                    <ShoppingCart className="w-4 h-4" />
+                  </motion.div>
+                )}
               </AnimatePresence>
             </Button>
           </div>
