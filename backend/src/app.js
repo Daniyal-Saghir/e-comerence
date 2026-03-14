@@ -55,10 +55,10 @@ app.use('/api/v1/orders', orderRoutes);
 // Catch-all route for frontend (SPA)
 const NODE_ENV = process.env.NODE_ENV || 'development';
 if (NODE_ENV === 'production') {
-  app.use(express.static(path.join(__dirname, '../../frontend/dist')));
+  app.use(express.static(path.join(__dirname, '../public')));
   
-  app.get('*', (req, res) => {
-    res.sendFile(path.resolve(__dirname, '../../frontend/dist', 'index.html'));
+  app.get('(.*)', (req, res) => {
+    res.sendFile(path.resolve(__dirname, '../public', 'index.html'));
   });
 } else {
   app.get('/', (req, res) => {
