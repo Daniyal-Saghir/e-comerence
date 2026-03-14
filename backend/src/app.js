@@ -14,8 +14,8 @@ const userRoutes = require('./routes/userRoutes');
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const connectDB = require('./config/db');
-const app = express();
 connectDB();
+const app = express();
 
 // Enable CORS
 app.use(cors());

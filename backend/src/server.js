@@ -1,12 +1,13 @@
 const dotenv = require('dotenv');
 
+
 // Load env vars
 dotenv.config();
 
 // Connect to database
 
 
-// We required the app after loading env vars to make sure they are available in app setup
+
 const app = require('./app');
 
 const PORT = process.env.PORT || 5000;
