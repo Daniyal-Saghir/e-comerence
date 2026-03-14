@@ -125,19 +125,26 @@ const Navbar = () => {
 
           {/* Cart Interaction */}
           <Link to="/cart">
-            <Button variant="ghost" size="icon" className="relative group/cart h-10 w-10 rounded-xl hover:bg-primary/10 transition-colors">
-              <ShoppingCart className="h-4.5 w-4.5 group-hover/cart:scale-110 transition-transform" />
-              <AnimatePresence>
-                  {cartItemsCount > 0 && (
-                    <motion.span 
-                        initial={{ scale: 0 }}
-                        animate={{ scale: 1 }}
-                        className="absolute -top-1 -right-1 h-5 w-5 bg-primary text-[10px] font-black text-white rounded-full flex items-center justify-center border-2 border-background shadow-lg shadow-primary/20"
-                    >
-                      {cartItemsCount}
-                    </motion.span>
-                  )}
-              </AnimatePresence>
+            <Button 
+                variant="ghost" 
+                size="icon" 
+                asChild
+                className="relative group/cart h-10 w-10 rounded-xl hover:bg-primary/10 transition-colors z-[101]"
+            >
+                <div>
+                    <ShoppingCart className="h-4.5 w-4.5 group-hover/cart:scale-110 transition-transform" />
+                    <AnimatePresence>
+                        {cartItemsCount > 0 && (
+                            <motion.span 
+                                initial={{ scale: 0 }}
+                                animate={{ scale: 1 }}
+                                className="absolute -top-1 -right-1 h-5 w-5 bg-primary text-[10px] font-black text-white rounded-full flex items-center justify-center border-2 border-background shadow-lg shadow-primary/20"
+                            >
+                                {cartItemsCount}
+                            </motion.span>
+                        )}
+                    </AnimatePresence>
+                </div>
             </Button>
           </Link>
 

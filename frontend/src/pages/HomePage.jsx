@@ -58,10 +58,10 @@ const HomePage = () => {
   const featuredProducts = products.filter(p => p.isFeatured).slice(0, 3);
 
   const categories = [
-    { name: 'Computing', id: 'computing', icon: Laptop, count: '12+ Units', color: 'bg-blue-500' },
-    { name: 'Mobile', id: 'mobile', icon: Smartphone, count: '24+ Units', color: 'bg-emerald-500' },
-    { name: 'Audio', id: 'audio', icon: Headphones, count: '18+ Units', color: 'bg-purple-500' },
-    { name: 'Wearables', id: 'wearables', icon: Watch, count: '8+ Units', color: 'bg-amber-500' }
+    { name: 'Computing', id: 'Computing', icon: Laptop, count: '12+ Units', color: 'bg-blue-500' },
+    { name: 'Mobile', id: 'Mobile', icon: Smartphone, count: '24+ Units', color: 'bg-emerald-500' },
+    { name: 'Audio', id: 'Audio', icon: Headphones, count: '18+ Units', color: 'bg-purple-500' },
+    { name: 'Wearables', id: 'Wearables', icon: Watch, count: '8+ Units', color: 'bg-amber-500' }
   ];
 
   const brands = [

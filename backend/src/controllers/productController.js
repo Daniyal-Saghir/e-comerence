@@ -22,10 +22,10 @@ exports.getProducts = async (req, res, next) => {
         ];
     }
 
-    // 2. Category Filter (Supports single or multiple)
+    // 2. Category Filter (Supports single or multiple, case-insensitive)
     if (category) {
       const categories = category.split(',');
-      query.category = { $in: categories };
+      query.category = { $in: categories.map(cat => new RegExp(`^${cat}$`, 'i')) };
     }
 
     // 3. Price Filter
