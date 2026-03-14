@@ -1,0 +1,39 @@
+{
+  "version": 2,
+  "name": "e-commerce-premium",
+  "builds": [
+    {
+      "src": "backend/src/app.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "package.json",
+      "use": "@vercel/static-build",
+      "config": {
+        "distDir": "backend/public"
+      }
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "/backend/src/app.js"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/backend/public/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/backend/public/index.html"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "PORT": "5000",
+    "MONGO_URI": "mongodb+srv://daniyalsaghir:daniyalmongodb@cluster0.nj9nrot.mongodb.net/ecom?appName=Cluster0",
+    "FIREBASE_PROJECT_ID": "ecom-dabe5",
+    "FIREBASE_CLIENT_EMAIL": "firebase-adminsdk-fbsvc@ecom-dabe5.iam.gserviceaccount.com",
+    "FIREBASE_PRIVATE_KEY": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCkX0VL6EIJm/3Q\nSJCVvx4GFS/dVBNUFflJAv3ND2mJG0F0bMAVmlDBoDDKyIFLcoCagyMYLm0kzvVl\ntdIqLy9gnQDnlmLEtlM6Nvv8h4nqI6fH9tFTTjvmg27WHW73oCXF3XTe9Qz9KcI/\nrK/qoP05jet4Ab0OzcH5rBhi+hQnTEqe+WpzV4ueCJPMAtJ9kEQRLUi5BZcRjYDc\n4sD3xetYbRLCsUYTUrKTQECLGxS8/ilqQS2K00rUmdHtGNp7F5KLfj0vkEomo1MY\nIURaOHAYHm41FWUCTilAe/6BvsPl900Fjyw3k60PhXWsG73eN5Mm9pY29T5arp3/\nOHLw+iT9AgMBAAECggEABNIOdDVxilqazPrz0pByTvdcGf+XOYYTc4K08sia7bxw\n5Pszfu6xo5wREkFjGVVYVC+4XcMuzD+NjtgQO9B6cTjph+EvMFmwgyqNpVBMSSOW\njhS8+tZ2h0IfhAQE9xopQW5HOSqyoNISsk9cMWNbSc7RswlKBB8gqzPS20Q+RxC3\nryAYdbfrGadcAyRZdDWGdDZAVJBQgROu70UhsQzvGaefj23Rf2UzMXX8DpqPqtRN\nznPaOWIglUt4koC0+ZkXhDzFSs6zs+sgaXL4dZqDMCegS45+MqkQQ39/Ln/CnlRO\ne6TiHC1/mZAH1Vp8RW/jFSwDYtZr/tbXW7wzuTqMeQKBgQDPhu5yFSC3/XAqkdTz\n+CMg5lXXvnPbW5a1uqh3AlqkcocXT9sFw9RN/NTl5IHu5dPneZCDacY7WKxBuYfI\nmdroTsPS3W9Yon2EFNarlaYMuXvRnXd+n7fswyyQo2uzMCRAKYLJuQ49YdMeGlab\nyI3ZPS+FVsOVrj4OwH0gjmB8bwKBgQDKw+SqVzzYNoLgxOt1fU3hq64UKrMn8iSc\nY3v1fTG3gJL5LWRhLl5ZC3lFQuLmyZVC562k5zKgNdxEBIMFUaTw63D0Xdm/4pr5\n0yg+pt+JG6m+iFPgXvSubeRADNEvVUSwsgsV5jLingdmkbpC3F5E08mnzhrno83E\n+pg7BMuDUwKBgQDNyePRxRm42dzMmeguNbW//ijJ09ZXg68jboF34iG4SMmlWE68\nnMB+xWTow3wFRmqnc2jWp6EnYHsQgcYgKlFlZBXTmDm+DwOgYnmtlKwgmh4qcpf4\nPLHKWpBqrWMzQV3xMji7iIKSY9tSUpPnzyy6a24gLzWrzClFv6NVEVqkiQKBgQDJ\nTHdsYRVHtb5zNSxpRNAX9Z/p54ZbZvrPw7hhvDuqaNwAwv6/uA/0qP5pM4EeDAzC\nEk2CxACvqykU4cHNewOcJrHJ+I5gALFIykhPAs4zSSJYxPE4dCzIKtMKf28BZc6+\n+NMml5X3A1pnis92514zSGsPy/9L7oQvRXXySc1dfwKBgDss9qvLdPMcefhnB/kV\ne1A7JOjYeah78RFcGB0w6kcVex835kzUryDq6NaKwxcHVO6E0aknyNw0Ne1RsqpR\nfHg6ADs5rAZwksrAaqqPge68faSnv2RRslCccIPCd9k5nln83eOmtS7eRFhNDona\nK4M9mu4uadiZoqLAjq2YpuNB\n-----END PRIVATE KEY-----\n"
+  }
+}
